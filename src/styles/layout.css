@@ -1,0 +1,84 @@
+/* styles/layout.css */
+.vl-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.vl-page {
+  width: min(var(--container), calc(100% - 32px));
+  margin: 0 auto;
+  padding: 18px 0 28px;
+}
+
+.vl-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.vl-grid-2 {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.vl-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vl-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.vl-editor-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr) 340px;
+  gap: 18px;
+  min-height: calc(100vh - 126px);
+}
+
+.vl-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)), var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+}
+
+.vl-panel-inner {
+  padding: 18px;
+}
+
+.vl-section-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.vl-section-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.vl-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vl-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 14px 0;
+}
+
+@media (max-width: 1100px) {
+  .vl-grid-2,
+  .vl-grid-3,
+  .vl-editor-layout {
+    grid-template-columns: 1fr;
+  }
+}

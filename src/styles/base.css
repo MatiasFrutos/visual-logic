@@ -1,0 +1,67 @@
+/* styles/base.css */
+:root {
+  --bg: #0b1020;
+  --bg-soft: #101728;
+  --panel: #121a2b;
+  --panel-2: #182235;
+  --panel-3: #1d2940;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --text: #eef3ff;
+  --muted: #98a7c7;
+  --primary: #5b8cff;
+  --primary-soft: rgba(91, 140, 255, 0.14);
+  --success: #34d399;
+  --warning: #fbbf24;
+  --danger: #fb7185;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --container: 1400px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(91, 140, 255, 0.18), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.12), transparent 26%),
+    var(--bg);
+  color: var(--text);
+}
+
+body {
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+pre,
+code {
+  font-family: "Fira Code", "JetBrains Mono", monospace;
+}
+
+#app {
+  min-height: 100vh;
+}

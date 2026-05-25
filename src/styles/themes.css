@@ -1,0 +1,18 @@
+/* styles/themes.css */
+body[data-theme="light"] {
+  --bg: #edf2fb;
+  --bg-soft: #f8fbff;
+  --panel: #ffffff;
+  --panel-2: #f4f7fd;
+  --panel-3: #e9eef9;
+  --line: rgba(15, 23, 42, 0.08);
+  --line-strong: rgba(15, 23, 42, 0.14);
+  --text: #162033;
+  --muted: #5f6f89;
+  --primary: #3366ff;
+  --primary-soft: rgba(51, 102, 255, 0.08);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow: 0 20px 35px rgba(16, 24, 40, 0.08);
+}

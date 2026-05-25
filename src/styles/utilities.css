@@ -1,0 +1,32 @@
+/* styles/utilities.css */
+.u-muted {
+  color: var(--muted);
+}
+
+.u-mt-0 {
+  margin-top: 0;
+}
+
+.u-mb-0 {
+  margin-bottom: 0;
+}
+
+.u-hidden {
+  display: none !important;
+}
+
+.u-center {
+  text-align: center;
+}
+
+.u-space-top {
+  margin-top: 18px;
+}
+
+.u-space-bottom {
+  margin-bottom: 18px;
+}
+
+.u-mono {
+  font-family: "Fira Code", "JetBrains Mono", monospace;
+}

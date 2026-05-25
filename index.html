@@ -1,0 +1,112 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Visual Logic</title>
+
+  <link rel="stylesheet" href="./src/styles/base.css" />
+  <link rel="stylesheet" href="./src/styles/layout.css" />
+  <link rel="stylesheet" href="./src/styles/components.css" />
+  <link rel="stylesheet" href="./src/styles/themes.css" />
+  <link rel="stylesheet" href="./src/styles/utilities.css" />
+
+  <link rel="stylesheet" href="./src/pages/home/home.page.css" />
+  <link rel="stylesheet" href="./src/pages/editor/editor.page.css" />
+  <link rel="stylesheet" href="./src/pages/export/export.page.css" />
+</head>
+<body data-theme="dark">
+  <div id="app"></div>
+
+  <script>
+    "use strict";
+
+    window.VisualLogic = window.VisualLogic || {};
+    window.VisualLogic.pages = window.VisualLogic.pages || {};
+    window.VisualLogic.ui = window.VisualLogic.ui || {};
+    window.VisualLogic.events = window.VisualLogic.events || {};
+    window.VisualLogic.helpers = window.VisualLogic.helpers || {};
+    window.VisualLogic.storage = window.VisualLogic.storage || {};
+    window.VisualLogic.modules = window.VisualLogic.modules || {};
+    window.VisualLogic.translator = window.VisualLogic.translator || {};
+    window.VisualLogic.exporter = window.VisualLogic.exporter || {};
+    window.VisualLogic.canvas = window.VisualLogic.canvas || {};
+    window.VisualLogic.nodes = window.VisualLogic.nodes || {};
+    window.VisualLogic.connections = window.VisualLogic.connections || {};
+    window.VisualLogic.inspector = window.VisualLogic.inspector || {};
+    window.VisualLogic.validators = window.VisualLogic.validators || {};
+    window.VisualLogic.ids = window.VisualLogic.ids || {};
+    window.VisualLogic.router = window.VisualLogic.router || {};
+    window.VisualLogic.config = window.VisualLogic.config || {};
+    window.VisualLogic.state = window.VisualLogic.state || {};
+  </script>
+
+  <!-- LUCIDE -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- APP -->
+  <script src="./src/app/config.js"></script>
+  <script src="./src/app/state.js"></script>
+  <script src="./src/app/router.js"></script>
+
+  <!-- CORE -->
+  <script src="./src/core/events.js"></script>
+  <script src="./src/core/helpers.js"></script>
+  <script src="./src/core/ids.js"></script>
+  <script src="./src/core/validators.js"></script>
+
+  <!-- MODULES / STORAGE -->
+  <script src="./src/modules/storage/storage.js"></script>
+
+  <!-- MODULES / CANVAS -->
+  <script src="./src/modules/canvas/canvas.js"></script>
+  <script src="./src/modules/canvas/grid.js"></script>
+  <script src="./src/modules/canvas/selection.js"></script>
+  <script src="./src/modules/canvas/zoom.js"></script>
+
+  <!-- MODULES / NODES -->
+  <script src="./src/modules/nodes/node-types.js"></script>
+  <script src="./src/modules/nodes/nodes.js"></script>
+  <script src="./src/modules/nodes/node-actions.js"></script>
+  <script src="./src/modules/nodes/node-render.js"></script>
+
+  <!-- MODULES / CONNECTIONS -->
+  <script src="./src/modules/connections/connections.js"></script>
+  <script src="./src/modules/connections/connection-actions.js"></script>
+  <script src="./src/modules/connections/connection-path.js"></script>
+  <script src="./src/modules/connections/connection-render.js"></script>
+
+  <!-- MODULES / INSPECTOR -->
+  <script src="./src/modules/inspector/inspector.js"></script>
+
+  <!-- MODULES / TRANSLATOR -->
+  <script src="./src/modules/translator/translator-utils.js"></script>
+  <script src="./src/modules/translator/flow-parser.js"></script>
+  <script src="./src/modules/translator/pseudocode.js"></script>
+  <script src="./src/modules/translator/javascript.js"></script>
+
+  <!-- MODULES / EXPORTER -->
+  <script src="./src/modules/exporter/copy-output.js"></script>
+  <script src="./src/modules/exporter/export-image.js"></script>
+  <script src="./src/modules/exporter/export-json.js"></script>
+
+  <!-- UI -->
+  <script src="./src/ui/header.js"></script>
+  <script src="./src/ui/sidebar.js"></script>
+  <script src="./src/ui/toolbar.js"></script>
+  <script src="./src/ui/inspector-panel.js"></script>
+  <script src="./src/ui/footer.js"></script>
+  <script src="./src/ui/modal.js"></script>
+  <script src="./src/ui/toast.js"></script>
+  <script src="./src/ui/empty-state.js"></script>
+
+  <!-- PAGES -->
+  <script src="./src/pages/home/home.page.js"></script>
+  <script src="./src/pages/editor/editor.page.js"></script>
+  <script src="./src/pages/export/export.page.js"></script>
+
+  <!-- APP BOOTSTRAP -->
+  <script src="./src/app/app.js"></script>
+</body>
+</html>

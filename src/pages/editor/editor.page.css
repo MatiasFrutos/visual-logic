@@ -1,0 +1,127 @@
+/* AJUSTE HEADER FINO + BORRADO DE CONEXION */
+
+/* Header mas bajo, fino y moderno */
+.vl-header {
+  min-height: 48px !important;
+  padding: 7px 10px !important;
+  border-radius: 14px !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.vl-header-logo {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  border-radius: 10px !important;
+}
+
+.vl-header-logo i,
+.vl-header-logo svg {
+  width: 17px !important;
+  height: 17px !important;
+}
+
+.vl-header-title strong,
+.vl-header-title h1 {
+  font-size: 13px !important;
+  line-height: 1.1 !important;
+}
+
+.vl-header-title span,
+.vl-header-title p {
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+}
+
+.vl-header button,
+.vl-header a {
+  min-height: 32px !important;
+  padding: 0 9px !important;
+  border-radius: 10px !important;
+  font-size: 11px !important;
+}
+
+.vl-header button i,
+.vl-header button svg,
+.vl-header a i,
+.vl-header a svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* Ajusta altura del editor al header mas fino */
+.vl-editor-board-card {
+  height: calc(100vh - 166px) !important;
+}
+
+/* Conexion seleccionable y eliminable */
+.vl-connection-group {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.vl-connection-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 24;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+
+.vl-connection-path-shadow {
+  fill: none;
+  stroke: rgba(15, 23, 42, 0.12);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.vl-connection-path {
+  fill: none;
+  stroke: #2563eb;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.vl-connection-group:hover .vl-connection-path {
+  stroke: #1d4ed8;
+  stroke-width: 3.2;
+}
+
+.vl-connection-group.is-selected .vl-connection-path {
+  stroke: #dc2626;
+  stroke-width: 3.6;
+}
+
+.vl-connection-group.is-selected .vl-connection-path-shadow {
+  stroke: rgba(220, 38, 38, 0.18);
+  stroke-width: 9;
+}
+
+.vl-connection-delete {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.vl-connection-delete-bg {
+  fill: #dc2626;
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 2;
+  filter: drop-shadow(0 8px 16px rgba(220, 38, 38, 0.28));
+}
+
+.vl-connection-delete-text {
+  fill: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  dominant-baseline: middle;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+}

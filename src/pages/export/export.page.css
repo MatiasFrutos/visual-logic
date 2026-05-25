@@ -1,0 +1,14 @@
+/* pages/export/export.page.css */
+.vl-code-block strong {
+  font-size: 14px;
+  letter-spacing: -0.02em;
+}
+
+.vl-code-block .vl-tag {
+  background: rgba(255,255,255,0.03);
+}
+
+#vl-pseudocode-output,
+#vl-javascript-output {
+  min-height: 360px;
+}
