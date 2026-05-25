@@ -197,6 +197,7 @@
           linear-gradient(180deg, #f8fafc, #eef2f7);
         background-size: 22px 22px, 100% 100%;
         box-sizing: border-box;
+        touch-action: pan-x pan-y;
       }
 
       .vl-editor-canvas.is-delete-connection {
@@ -328,6 +329,8 @@
         color: #0f172a;
         cursor: grab;
         user-select: none;
+        -webkit-user-select: none;
+        touch-action: none;
         box-sizing: border-box;
       }
 
@@ -350,6 +353,7 @@
           inset 0 1px 0 rgba(255, 255, 255, 0.85);
         box-sizing: border-box;
         overflow: hidden;
+        pointer-events: none;
       }
 
       .vl-flow-node-head,
@@ -860,7 +864,7 @@
         <div
           class="vl-flow-node is-${app.helpers.escapeHtml(node.type)} is-shape-${app.helpers.escapeHtml(shape)} ${isSelected ? "is-selected" : ""} ${isPending ? "is-pending" : ""}"
           data-flow-node="${app.helpers.escapeHtml(node.id)}"
-          title="Click: seleccionar. Doble click: conectar con el nodo seleccionado."
+          title="Arrastrar: mover. Click: seleccionar. Doble click: conectar con el nodo seleccionado."
           style="
             left:${Number(node.x || 0)}px;
             top:${Number(node.y || 0)}px;
@@ -1030,6 +1034,13 @@
       const nodeId = nodeElement.getAttribute("data-flow-node");
 
       nodeElement.addEventListener("click", function (event) {
+        if (nodeElement.dataset.vlWasDragging === "true") {
+          event.preventDefault();
+          event.stopPropagation();
+          nodeElement.dataset.vlWasDragging = "false";
+          return;
+        }
+
         event.stopPropagation();
 
         if (app.state.currentTool === "delete-connection") {
@@ -1082,9 +1093,9 @@
         }
       });
 
-      nodeElement.addEventListener("mousedown", function (event) {
+      nodeElement.addEventListener("pointerdown", function (event) {
         if (app.state.currentTool !== "select") return;
-        if (event.button !== 0) return;
+        if (event.pointerType === "mouse" && event.button !== 0) return;
 
         const targetNode = diagram.nodes.find(function (item) {
           return item.id === nodeId;
@@ -1095,43 +1106,98 @@
         event.preventDefault();
         event.stopPropagation();
 
+        if (typeof nodeElement.setPointerCapture === "function") {
+          try {
+            nodeElement.setPointerCapture(event.pointerId);
+          } catch (error) {
+            // Algunos navegadores móviles pueden rechazar captura si el nodo se re-renderiza.
+          }
+        }
+
         app.selection.selectNode(nodeId);
         app.state.setDragging(true);
 
         const zoom = getZoomValue(getDiagram());
-        const startMouseX = event.clientX;
-        const startMouseY = event.clientY;
+        const startPointerX = event.clientX;
+        const startPointerY = event.clientY;
         const startNodeX = Number(targetNode.x || 0);
         const startNodeY = Number(targetNode.y || 0);
+        const nodeWidth = Number(targetNode.width || 180);
+        const nodeHeight = Number(targetNode.height || 90);
 
-        function onMouseMove(moveEvent) {
-          const deltaX = (moveEvent.clientX - startMouseX) / zoom;
-          const deltaY = (moveEvent.clientY - startMouseY) / zoom;
+        let moved = false;
+        let latestX = startNodeX;
+        let latestY = startNodeY;
+        let rafId = null;
 
-          const nextX = Math.max(
-            16,
-            Math.min(logicalSize.width - Number(targetNode.width || 180) - 16, startNodeX + deltaX)
-          );
-
-          const nextY = Math.max(
-            16,
-            Math.min(logicalSize.height - Number(targetNode.height || 90) - 16, startNodeY + deltaY)
-          );
-
-          app.nodes.move(nodeId, nextX, nextY);
+        function paintMove() {
+          rafId = null;
+          app.nodes.move(nodeId, latestX, latestY);
           refreshCanvasLayers();
         }
 
-        function onMouseUp() {
-          app.state.setDragging(false);
-          document.removeEventListener("mousemove", onMouseMove);
-          document.removeEventListener("mouseup", onMouseUp);
-          normalizeNodesToCanvas();
-          app.render();
+        function onPointerMove(moveEvent) {
+          moveEvent.preventDefault();
+
+          const deltaX = (moveEvent.clientX - startPointerX) / zoom;
+          const deltaY = (moveEvent.clientY - startPointerY) / zoom;
+
+          if (Math.abs(deltaX) > 2 || Math.abs(deltaY) > 2) {
+            moved = true;
+            nodeElement.dataset.vlWasDragging = "true";
+          }
+
+          latestX = Math.max(
+            16,
+            Math.min(logicalSize.width - nodeWidth - 16, startNodeX + deltaX)
+          );
+
+          latestY = Math.max(
+            16,
+            Math.min(logicalSize.height - nodeHeight - 16, startNodeY + deltaY)
+          );
+
+          if (!rafId) {
+            rafId = window.requestAnimationFrame(paintMove);
+          }
         }
 
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
+        function onPointerUp(upEvent) {
+          upEvent.preventDefault();
+
+          app.state.setDragging(false);
+
+          if (rafId) {
+            window.cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+
+          if (moved) {
+            app.nodes.move(nodeId, latestX, latestY);
+          }
+
+          document.removeEventListener("pointermove", onPointerMove);
+          document.removeEventListener("pointerup", onPointerUp);
+          document.removeEventListener("pointercancel", onPointerUp);
+
+          if (typeof nodeElement.releasePointerCapture === "function") {
+            try {
+              nodeElement.releasePointerCapture(event.pointerId);
+            } catch (error) {
+              // Sin impacto funcional.
+            }
+          }
+
+          normalizeNodesToCanvas();
+
+          if (moved) {
+            app.render();
+          }
+        }
+
+        document.addEventListener("pointermove", onPointerMove, { passive: false });
+        document.addEventListener("pointerup", onPointerUp, { passive: false });
+        document.addEventListener("pointercancel", onPointerUp, { passive: false });
       });
     });
 
@@ -1224,8 +1290,8 @@
                       <h3>${app.helpers.escapeHtml(diagram?.name || "Sin diagrama activo")}</h3>
                       <p>${
                         currentTool === "delete-connection"
-                          ? "Modo borrar conexión activo: hacé click sobre una línea para eliminarla directo. Escape vuelve a seleccionar."
-                          : "Conectar: click en origen y destino. Borrar conexión: botón Borrar conexión y click en la línea."
+                          ? "Modo borrar conexión activo: tocá una línea para eliminarla directo. Escape vuelve a seleccionar."
+                          : "Móvil: mantené y arrastrá un nodo para moverlo. Conectar: click en origen y destino."
                       }</p>
                     </div>
 
