@@ -38,7 +38,7 @@
 }
 
 .vl-panel {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)), var(--panel);
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow);
@@ -50,9 +50,10 @@
 
 .vl-section-title {
   margin: 0 0 6px;
+  color: var(--text);
   font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
 .vl-section-subtitle {
@@ -80,5 +81,29 @@
   .vl-grid-3,
   .vl-editor-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .vl-page {
+    width: calc(100% - 16px);
+    padding: 10px 0 18px;
+  }
+
+  .vl-stack {
+    gap: 12px;
+  }
+
+  .vl-grid {
+    gap: 12px;
+  }
+
+  .vl-panel-inner {
+    padding: 14px;
+  }
+
+  .vl-split {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
